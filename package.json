@@ -8,7 +8,7 @@
     "sass": "node-sass -w scss/ -o dist/css/ --recursive",
     "deploy": "gh-pages -d dist"
   },
-  "author": "Brad Traversy",
+  "author": "Rassul Aitassov",
   "license": "MIT",
   "dependencies": {
     "gh-pages": "^1.2.0",
@@ -17,9 +17,9 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bradtraversy/modern_portfolio.git"
+    "url": "git+https://github.com/rassul3003/portfolio.git"
   },
   "bugs": {
-    "url": "https://github.com/bradtraversy/modern_portfolio/issues"
+    "url": "https://github.com/rassul3003/modern_portfolio/issues"
   }
 }
