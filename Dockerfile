@@ -1,24 +1,30 @@
-# Use an official Node.js runtime as a base image
-FROM node:latest
+# Use a Node.js base image to handle Node.js operations like installing dependencies
+FROM node:15
 
-# Set the working directory in the container
+# Set the working directory in the Docker container
 WORKDIR /usr/src/app
 
-# Copy the package.json and package-lock.json files
+# Copy package.json and package-lock.json into the working directory
 COPY package*.json ./
 
-# Install any dependencies
-RUN npm init & install node-sass
-RUN npm start sass
+# Install dependencies defined in package.json
+RUN npm install
 
-# Copy the entire project
+# Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .
 
-# Build the project if necessary
-RUN npm run build
+# Compile Sass to CSS using the script defined in package.json
+RUN npm run sass
 
-# Your application will be running on port 3000
-EXPOSE 3000
+# Since this is a static site, use nginx to serve the content
+# Use nginx stable alpine image
+FROM nginx:stable-alpine
 
-# Run your app
-CMD ["node", "server.js"] # Replace 'server.js' with your Node.js server file
+# Copy static assets from builder stage
+COPY --from=0 /usr/src/app/dist /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start nginx and keep the process running
+CMD ["nginx", "-g", "daemon off;"]
